@@ -1,0 +1,31 @@
+<svg width="260" height="80" viewBox="0 0 260 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffcc00"></stop>
+      <stop offset="100%" stop-color="#002b5c"></stop>
+    </linearGradient>
+    <linearGradient id="fillGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2b9348"></stop>
+      <stop offset="100%" stop-color="#80b918"></stop>
+    </linearGradient>
+  </defs>
+
+  <!-- fundo arredondado -->
+  <rect x="0" y="0" width="260" height="80" rx="40" fill="url(#bgGrad)"></rect>
+
+  <!-- ícone da bateria -->
+  <g transform="translate(18,20)">
+    <rect x="0" y="8" width="60" height="32" rx="8" fill="#00152b" stroke="#ffdd33" stroke-width="3"></rect>
+    <rect x="60" y="14" width="8" height="20" rx="2" fill="#ffdd33"></rect>
+    <rect x="6" y="14" width="40" height="20" rx="4" fill="url(#fillGrad)"></rect>
+    <text x="30" y="30" text-anchor="middle" font-size="20" fill="#ffef8a" font-family="system-ui, -apple-system, sans-serif">⚡</text>
+  </g>
+
+  <!-- texto -->
+  <text x="110" y="33" fill="#ffffff" font-size="22" font-weight="800" font-family="system-ui, -apple-system, sans-serif" letter-spacing="4">
+    BRASIL
+  </text>
+  <text x="110" y="52" fill="#ffffff" font-size="18" font-weight="700" font-family="system-ui, -apple-system, sans-serif" letter-spacing="6">
+    BATERIAS
+  </text>
+</svg>
