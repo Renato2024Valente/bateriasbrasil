@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Brasil Baterias - Relatório de Serviço</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONTES E ESTILO BÁSICO -->
+  <style>
+    :root {
+      --azul-escuro: #002b5c;
+      --azul-medio: #014f86;
+      --amarelo: #ffcc00;
+      --cinza-claro: #f4f6fb;
+      --texto: #222;
+      --danger: #c1121f;
+      --radius: 16px;
+      --shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--azul-escuro), #000814);
+      min-height: 100vh;
+      color: var(--texto);
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-container {
+      background: rgba(255,255,255,0.98);
+      max-width: 1200px;
+      width: 100%;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+      border-bottom: 3px solid var(--amarelo);
+      padding-bottom: 10px;
+    }
+
+    .logo-mark {
+      width: 70px;
+      height: 70px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 20% 20%, var(--amarelo), var(--azul-escuro));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 20px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+    }
+
+    header h1 {
+      font-size: 20px;
+      color: var(--azul-escuro);
+    }
+
+    header p {
+      font-size: 13px;
+      color: #555;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+      margin-bottom: 10px;
+      border: 1px solid #e3e7f0;
+    }
+
+    .card h2 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--azul-medio);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .badge {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: var(--azul-escuro);
+      color: #fff;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    @media (max-width: 700px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    label {
+      font-size: 12px;
+      color: #333;
+      margin-bottom: 2px;
+      display: block;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 7px 8px;
+      border-radius: 8px;
+      border: 1px solid #d0d4e0;
+      font-size: 13px;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+      background: #fff;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--azul-medio);
+      box-shadow: 0 0 0 1px rgba(1,79,134,0.3);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .small {
+      font-size: 11px;
+      color: #666;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      background: var(--azul-medio);
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(1,79,134,0.45);
+    }
+
+    .btn-secondary {
+      background: #e9ecf5;
+      color: #333;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-success {
+      background: #2b9348;
+      color: #fff;
+    }
+
+    .sig-pad-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    @media (max-width: 700px) {
+      .sig-pad-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sig-pad {
+      border: 1px dashed #c0c4d4;
+      border-radius: 10px;
+      padding: 4px;
+      background: #f8fafc;
+    }
+
+    .sig-pad canvas {
+      width: 100%;
+      height: 120px;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px #e0e4f0;
+    }
+
+    .sig-label {
+      font-size: 11px;
+      color: #555;
+      margin-top: 2px;
+      text-align: center;
+    }
+
+    .sig-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 4px;
+    }
+
+    .sig-actions button {
+      padding: 4px 10px;
+      font-size: 11px;
+    }
+
+    .camera-area {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) {
+      .camera-area {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    video {
+      width: 100%;
+      border-radius: 10px;
+      background: #000;
+    }
+
+    #photoPreview {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #d0d4e0;
+      background: #f8fafc;
+      object-fit: contain;
+      min-height: 100px;
+    }
+
+    #qrcode {
+      width: 150px;
+      height: 150px;
+      border-radius: 12px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #e0e4f0;
+      margin-top: 6px;
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      background: #e0f7e9;
+      color: #1b7a3b;
+    }
+
+    .status-pendente {
+      background: #ffe6e3;
+      color: #b02a2a;
+    }
+
+    .lista-servicos {
+      max-height: 260px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .linha-servico {
+      border-radius: 10px;
+      padding: 6px 8px;
+      margin-bottom: 6px;
+      background: var(--cinza-claro);
+      border: 1px solid #dde2ee;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 12px;
+    }
+
+    .linha-servico-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .store-photo {
+      width: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid var(--azul-medio);
+      background: #000;
+      max-height: 260px;
+    }
+
+    .store-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    .store-photo small {
+      display: block;
+      text-align: center;
+      padding: 4px 8px;
+      font-size: 11px;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+    }
+
+    .info-alerta {
+      font-size: 11px;
+      color: #555;
+      margin-top: 4px;
+    }
+
+    .editando-pill {
+      font-size: 11px;
+      color: #b02a2a;
+      margin-left: 8px;
+    }
+  </style>
+
+  <!-- BIBLIOTECA JS PARA PDF (jsPDF) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <!-- BIBLIOTECA JS PARA QRCODE -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+<div class="app-container">
+  <header>
+    <div class="logo-mark">BB</div>
+    <div>
+      <h1>Brasil Baterias &mdash; Relatório de Serviço</h1>
+      <p>Recibo digital com foto, assinaturas e pagamento via Pix.</p>
+      <span id="statusEdicao" class="editando-pill"></span>
+    </div>
+  </header>
+
+  <div class="layout-grid">
+    <!-- COLUNA ESQUERDA: FORMULÁRIO PRINCIPAL -->
+    <div>
+      <!-- DADOS DA EMPRESA -->
+      <div class="card">
+        <h2>Dados da Empresa <span class="badge">Brasil Baterias</span></h2>
+        <div class="grid-2">
+          <div>
+            <label>Razão Social</label>
+            <input id="empresa_nome" value="A Brasil Baterias" readonly>
+          </div>
+          <div>
+            <label>CNPJ</label>
+            <input id="empresa_cnpj" value="43.238.534/0001-63" readonly>
+          </div>
+          <div>
+            <label>Endereço</label>
+            <input id="empresa_endereco" value="Av. Pedro de Toledo, 1894 - Palmital - Marília/SP" readonly>
+          </div>
+          <div>
+            <label>Telefones</label>
+            <input id="empresa_telefones" value="(14) 3433-0722 / (14) 99690-8744" readonly>
+          </div>
+        </div>
+        <p class="small">* Dados podem ser ajustados direto no código, se desejar.</p>
+      </div>
+
+      <!-- DADOS DO CLIENTE -->
+      <div class="card">
+        <h2>Dados do Cliente</h2>
+        <div class="grid-2">
+          <div>
+            <label>Nome do Cliente</label>
+            <input id="cliente_nome" placeholder="Nome completo do cliente">
+          </div>
+          <div>
+            <label>CPF / CNPJ</label>
+            <input id="cliente_doc" placeholder="Documento">
+          </div>
+          <div>
+            <label>Telefone / WhatsApp</label>
+            <input id="cliente_tel" placeholder="(xx) x xxxx-xxxx">
+          </div>
+          <div>
+            <label>Endereço do Cliente</label>
+            <input id="cliente_endereco" placeholder="Rua, número, bairro, cidade">
+          </div>
+        </div>
+      </div>
+
+      <!-- DADOS DO SERVIÇO -->
+      <div class="card">
+        <h2>Dados do Serviço</h2>
+        <div class="grid-2">
+          <div>
+            <label>Nº da OS / Referência</label>
+            <input id="servico_os" placeholder="Ex.: OS-2025-001">
+          </div>
+          <div>
+            <label>Data do Serviço</label>
+            <input type="date" id="servico_data">
+          </div>
+        </div>
+        <div style="margin-top:6px;">
+          <label>Descrição do Serviço Prestado</label>
+          <textarea id="servico_desc" placeholder="Ex.: Troca de bateria automotiva, verificação do sistema de carga, testes de partida, etc."></textarea>
+        </div>
+        <div style="margin-top:6px;">
+          <label>Observações</label>
+          <textarea id="servico_obs" placeholder="Garantia, condições especiais, observações sobre o veículo..."></textarea>
+        </div>
+        <div class="grid-2" style="margin-top:6px;">
+          <div>
+            <label>Valor do Serviço (R$)</label>
+            <input type="number" step="0.01" id="servico_valor" placeholder="Ex.: 330.00">
+          </div>
+          <div>
+            <label>Status do Pagamento</label>
+            <select id="servico_status">
+              <option value="PENDENTE">PENDENTE</option>
+              <option value="PAGO">PAGO</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOTO E CÂMERA -->
+      <div class="card">
+        <h2>Foto do Serviço <span class="badge">Evidência</span></h2>
+        <div class="camera-area">
+          <div>
+            <video id="video" autoplay playsinline></video>
+            <div class="btn-row" style="margin-top:6px;">
+              <button class="btn-secondary" type="button" id="btnAbrirCamera">Abrir câmera</button>
+              <button class="btn-primary" type="button" id="btnCapturarFoto">Capturar foto</button>
+              <button class="btn-secondary" type="button" id="btnFecharCamera">Fechar câmera</button>
+            </div>
+            <div style="margin-top:6px;">
+              <!-- Fallback: tirar/selecionar foto pelo input (funciona até em file:// no celular) -->
+              <label class="small">Ou selecione/tire uma foto do aparelho:</label>
+              <input type="file" id="inputFotoArquivo" accept="image/*" capture="environment">
+            </div>
+            <p class="info-alerta">
+              ⚠️ No celular, para a câmera ao vivo funcionar use <strong>HTTPS</strong> ou <strong>http://localhost</strong>.
+              <br>Se não funcionar, use o campo de selecionar foto acima.
+            </p>
+          </div>
+          <div>
+            <img id="photoPreview" alt="Prévia da foto do serviço">
+            <p class="small" style="margin-top:4px;">* A foto será incluída no PDF como evidência do serviço prestado.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ASSINATURAS -->
+      <div class="card">
+        <h2>Assinaturas Digitais</h2>
+        <div class="sig-pad-container">
+          <div class="sig-pad">
+            <canvas id="sigPrestador"></canvas>
+            <div class="sig-label">Assinatura do Prestador de Serviço</div>
+            <div class="sig-actions">
+              <button type="button" class="btn-secondary" id="btnLimparPrestador">Limpar</button>
+            </div>
+          </div>
+          <div class="sig-pad">
+            <canvas id="sigCliente"></canvas>
+            <div class="sig-label">Assinatura do Cliente</div>
+            <div class="sig-actions">
+              <button type="button" class="btn-secondary" id="btnLimparCliente">Limpar</button>
+            </div>
+          </div>
+        </div>
+        <p class="small">Use o dedo (no celular) ou o mouse (no PC) para assinar.</p>
+      </div>
+
+      <!-- PAGAMENTO PIX + AÇÕES -->
+      <div class="card">
+        <h2>Pagamento via Pix</h2>
+        <div class="grid-2">
+          <div>
+            <label>Chave Pix</label>
+            <input id="pix_chave" placeholder="Insira sua chave Pix (CPF, CNPJ, e-mail ou aleatória)">
+          </div>
+          <div>
+            <label>Nome do Recebedor (até 25 caracteres)</label>
+            <input id="pix_nome" placeholder="A BRASIL BATERIAS">
+          </div>
+          <div>
+            <label>Cidade (até 15 caracteres)</label>
+            <input id="pix_cidade" placeholder="MARILIA">
+          </div>
+          <div>
+            <label>Descrição / ID da transação (TxID)</label>
+            <input id="pix_txid" placeholder="Ex.: OS-2025-001">
+          </div>
+        </div>
+
+        <div class="btn-row" style="margin-top:8px;">
+          <button class="btn-primary" type="button" id="btnGerarPix">Gerar QR Code Pix</button>
+          <button class="btn-success" type="button" id="btnGerarPDF">Gerar PDF do Recibo</button>
+          <button class="btn-secondary" type="button" id="btnImprimir">Imprimir página</button>
+          <button class="btn-primary" type="button" id="btnSalvarLocal">Salvar no aparelho</button>
+          <button class="btn-secondary" type="button" id="btnNovo">Novo recibo</button>
+        </div>
+
+        <div style="margin-top:8px; display:flex; align-items:flex-start; gap:12px;">
+          <div>
+            <label class="small">QR Code Pix (apontar a câmera do app do banco):</label>
+            <div id="qrcode"></div>
+          </div>
+          <p class="info-alerta">
+            O QR Code é gerado seguindo o padrão <strong>BR Code / Pix</strong>, com valor e chave informados.
+            <br>Ao escanear, o app do banco já traz o pagamento pronto.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUNA DIREITA: FOTO DA LOJA + LISTA DE SERVIÇOS -->
+    <div>
+      <div class="card">
+        <h2>Foto da Loja</h2>
+        <div class="store-photo">
+          <img src="img_6882_original-1-YD0EvRg1zbI5gv0P.avif" alt="Fachada da Brasil Baterias">
+          <small>Endereço: Av. Pedro de Toledo, 1894 - Palmital, Marília - SP, 17509-022. Contato: (14) 3433-0722.</small>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Serviços Salvos <span class="badge" id="badgeTotal">0</span></h2>
+        <p class="small" style="margin-bottom:6px;">Clique em <strong>Abrir / Editar</strong> para corrigir um recibo já salvo.</p>
+        <div class="lista-servicos" id="listaServicos"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ==========================
+  // VARIÁVEIS GLOBAIS
+  // ==========================
+  let videoStream = null;
+  let qrcodeInstance = null;
+  let currentId = null; // ID do recibo que está sendo editado
+
+  const STORAGE_KEY = "brasil_baterias_servicos";
+
+  const statusEdicaoSpan = document.getElementById("statusEdicao");
+
+  // ==========================
+  // CÂMERA E FOTO
+  // ==========================
+  const video = document.getElementById("video");
+  const photoPreview = document.getElementById("photoPreview");
+  const btnAbrirCamera = document.getElementById("btnAbrirCamera");
+  const btnCapturarFoto = document.getElementById("btnCapturarFoto");
+  const btnFecharCamera = document.getElementById("btnFecharCamera");
+  const inputFotoArquivo = document.getElementById("inputFotoArquivo");
+
+  async function abrirCamera() {
+    try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert("Navegador não suporta acesso à câmera. Use o botão de selecionar foto.");
+        return;
+      }
+      videoStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+        audio: false
+      });
+      video.srcObject = videoStream;
+    } catch (err) {
+      alert("Erro ao acessar a câmera: " + err.message + "\nUse o seletor de foto como alternativa.");
+    }
+  }
+
+  function fecharCamera() {
+    if (videoStream) {
+      videoStream.getTracks().forEach(track => track.stop());
+      videoStream = null;
+      video.srcObject = null;
+    }
+  }
+
+  function capturarFoto() {
+    if (!videoStream) {
+      alert("Abra a câmera primeiro ou selecione uma foto pelo arquivo.");
+      return;
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth || 640;
+    canvas.height = video.videoHeight || 480;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+    photoPreview.src = dataUrl;
+    photoPreview.dataset.image = dataUrl;
+  }
+
+  // Fallback: escolher/tirar foto via input file
+  inputFotoArquivo.addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      photoPreview.src = ev.target.result;
+      photoPreview.dataset.image = ev.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  btnAbrirCamera.addEventListener("click", abrirCamera);
+  btnCapturarFoto.addEventListener("click", capturarFoto);
+  btnFecharCamera.addEventListener("click", fecharCamera);
+
+  // ==========================
+  // ASSINATURAS (CANVAS)
+  // ==========================
+  function initSignaturePad(canvasId, clearBtnId) {
+    const canvas = document.getElementById(canvasId);
+    const clearBtn = document.getElementById(clearBtnId);
+    const ctx = canvas.getContext("2d");
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const imgData = canvas.toDataURL(); // salvar desenho
+      canvas.width = rect.width;
+      canvas.height = 120;
+      if (imgData) {
+        const img = new Image();
+        img.src = imgData;
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+      }
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    let drawing = false;
+
+    function getPos(evt) {
+      const rect = canvas.getBoundingClientRect();
+      const touch = evt.touches ? evt.touches[0] : null;
+      const x = touch ? touch.clientX : evt.clientX;
+      const y = touch ? touch.clientY : evt.clientY;
+      return {
+        x: x - rect.left,
+        y: y - rect.top
+      };
+    }
+
+    function startDraw(evt) {
+      drawing = true;
+      const pos = getPos(evt);
+      ctx.beginPath();
+      ctx.moveTo(pos.x, pos.y);
+      evt.preventDefault();
+    }
+
+    function draw(evt) {
+      if (!drawing) return;
+      const pos = getPos(evt);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 2;
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.stroke();
+      evt.preventDefault();
+    }
+
+    function endDraw(evt) {
+      drawing = false;
+      evt && evt.preventDefault();
+    }
+
+    canvas.addEventListener("mousedown", startDraw);
+    canvas.addEventListener("mousemove", draw);
+    canvas.addEventListener("mouseup", endDraw);
+    canvas.addEventListener("mouseleave", endDraw);
+
+    canvas.addEventListener("touchstart", startDraw, { passive: false });
+    canvas.addEventListener("touchmove", draw, { passive: false });
+    canvas.addEventListener("touchend", endDraw, { passive: false });
+    canvas.addEventListener("touchcancel", endDraw, { passive: false });
+
+    clearBtn.addEventListener("click", () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
+  }
+
+  initSignaturePad("sigPrestador", "btnLimparPrestador");
+  initSignaturePad("sigCliente", "btnLimparCliente");
+
+  function limparAssinaturas() {
+    ["sigPrestador", "sigCliente"].forEach(id => {
+      const c = document.getElementById(id);
+      const ctx = c.getContext("2d");
+      ctx.clearRect(0, 0, c.width, c.height);
+    });
+  }
+
+  // ==========================
+  // PIX - GERAR BR CODE
+  // ==========================
+  const btnGerarPix = document.getElementById("btnGerarPix");
+
+  function tlv(id, value) {
+    const len = String(value.length).padStart(2, "0");
+    return id + len + value;
+  }
+
+  function crc16(str) {
+    let crc = 0xFFFF;
+    for (let i = 0; i < str.length; i++) {
+      crc ^= str.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) {
+        if (crc & 0x8000) {
+          crc = (crc << 1) ^ 0x1021;
+        } else {
+          crc = crc << 1;
+        }
+        crc &= 0xFFFF;
+      }
+    }
+    return crc;
+  }
+
+  function gerarPayloadPix({ chave, nome, cidade, valor, txid }) {
+    nome = (nome || "BRASIL BATERIAS").toUpperCase().substring(0, 25);
+    cidade = (cidade || "MARILIA").toUpperCase().substring(0, 15);
+    txid = (txid || "BRASILBATERIAS").substring(0, 25);
+
+    const gui = tlv("00", "br.gov.bcb.pix");
+    const chaveField = tlv("01", chave);
+    const merchantAccount = tlv("26", gui + chaveField);
+
+    const merchantCategoryCode = tlv("52", "0000");
+    const transactionCurrency = tlv("53", "986");
+    const amountString = valor ? Number(valor).toFixed(2) : "";
+    const transactionAmount = amountString ? tlv("54", amountString) : "";
+    const countryCode = tlv("58", "BR");
+    const merchantName = tlv("59", nome);
+    const merchantCity = tlv("60", cidade);
+    const additionalData = tlv("62", tlv("05", txid));
+
+    let payload =
+      tlv("00", "01") +
+      tlv("01", "11") +
+      merchantAccount +
+      merchantCategoryCode +
+      transactionCurrency +
+      transactionAmount +
+      countryCode +
+      merchantName +
+      merchantCity +
+      additionalData;
+
+    const toCRC = payload + "6304";
+    const crc = crc16(toCRC).toString(16).toUpperCase().padStart(4, "0");
+    payload += "63" + "04" + crc;
+    return payload;
+  }
+
+  function gerarQrCodePix() {
+    const chave = document.getElementById("pix_chave").value.trim();
+    const nome = document.getElementById("pix_nome").value.trim() || document.getElementById("empresa_nome").value.trim();
+    const cidade = document.getElementById("pix_cidade").value.trim() || "MARILIA";
+    const txid = document.getElementById("pix_txid").value.trim() || document.getElementById("servico_os").value.trim();
+    const valor = document.getElementById("servico_valor").value.trim();
+
+    if (!chave) {
+      alert("Informe a chave Pix.");
+      return;
+    }
+    if (!valor) {
+      alert("Informe o valor do serviço para gerar o Pix.");
+      return;
+    }
+
+    const payload = gerarPayloadPix({ chave, nome, cidade, valor, txid });
+
+    const qrContainer = document.getElementById("qrcode");
+    qrContainer.innerHTML = "";
+    qrcodeInstance = new QRCode(qrContainer, {
+      text: payload,
+      width: 140,
+      height: 140
+    });
+
+    alert("QR Code Pix gerado com sucesso!");
+  }
+
+  btnGerarPix.addEventListener("click", gerarQrCodePix);
+
+  // ==========================
+  // GERAR PDF DO RECIBO
+  // ==========================
+  const btnGerarPDF = document.getElementById("btnGerarPDF");
+
+  function gerarPDF() {
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      alert("Biblioteca de PDF (jsPDF) não carregou.\nVerifique a internet ou baixe o arquivo jsPDF localmente.");
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF("p", "mm", "a4");
+
+    const empresaNome = document.getElementById("empresa_nome").value;
+    const empresaCnpj = document.getElementById("empresa_cnpj").value;
+    const empresaEnd = document.getElementById("empresa_endereco").value;
+    const empresaTel = document.getElementById("empresa_telefones").value;
+
+    const clienteNome = document.getElementById("cliente_nome").value;
+    const clienteDoc = document.getElementById("cliente_doc").value;
+    const clienteTel = document.getElementById("cliente_tel").value;
+    const clienteEnd = document.getElementById("cliente_endereco").value;
+
+    const os = document.getElementById("servico_os").value;
+    const dataServ = document.getElementById("servico_data").value;
+    const descServ = document.getElementById("servico_desc").value;
+    const obsServ = document.getElementById("servico_obs").value;
+    const valor = document.getElementById("servico_valor").value;
+    const status = document.getElementById("servico_status").value;
+
+    let y = 15;
+    doc.setFontSize(14);
+    doc.setTextColor(0, 0, 80);
+    doc.text("BRASIL BATERIAS - RELATÓRIO DE SERVIÇO", 105, y, { align: "center" });
+
+    y += 6;
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Empresa: ${empresaNome}`, 10, y);
+    y += 5;
+    doc.text(`CNPJ: ${empresaCnpj}`, 10, y);
+    y += 5;
+    doc.text(`Endereço: ${empresaEnd}`, 10, y);
+    y += 5;
+    doc.text(`Telefones: ${empresaTel}`, 10, y);
+
+    y += 8;
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 80);
+    doc.text("Dados do Cliente", 10, y);
+    doc.setDrawColor(255, 204, 0);
+    doc.line(10, y + 1, 200, y + 1);
+
+    y += 6;
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Nome: ${clienteNome}`, 10, y);
+    y += 5;
+    doc.text(`Documento: ${clienteDoc}`, 10, y);
+    y += 5;
+    doc.text(`Telefone: ${clienteTel}`, 10, y);
+    y += 5;
+    doc.text(`Endereço: ${clienteEnd}`, 10, y);
+
+    y += 8;
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 80);
+    doc.text("Dados do Serviço", 10, y);
+    doc.setDrawColor(255, 204, 0);
+    doc.line(10, y + 1, 200, y + 1);
+
+    y += 6;
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`OS / Referência: ${os}`, 10, y);
+    y += 5;
+    doc.text(`Data: ${dataServ}`, 10, y);
+    y += 6;
+
+    doc.text("Descrição:", 10, y);
+    const descLines = doc.splitTextToSize(descServ, 190);
+    y += 5;
+    doc.text(descLines, 10, y);
+    y += descLines.length * 5;
+
+    if (obsServ) {
+      y += 2;
+      doc.text("Observações:", 10, y);
+      const obsLines = doc.splitTextToSize(obsServ, 190);
+      y += 5;
+      doc.text(obsLines, 10, y);
+      y += obsLines.length * 5;
+    }
+
+    y += 3;
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 80);
+    doc.text(`Valor do Serviço: R$ ${Number(valor || 0).toFixed(2)}`, 10, y);
+    doc.text(`Status: ${status}`, 150, y);
+
+    // FOTO, se existir
+    const fotoData = photoPreview.dataset.image;
+    if (fotoData) {
+      y += 8;
+      doc.setFontSize(11);
+      doc.setTextColor(0, 0, 80);
+      doc.text("Foto do Serviço", 10, y);
+      doc.setDrawColor(255, 204, 0);
+      doc.line(10, y + 1, 200, y + 1);
+      y += 4;
+
+      try {
+        const imgProps = doc.getImageProperties(fotoData);
+        const imgWidth = 80;
+        const imgHeight = (imgProps.height * imgWidth) / imgProps.width;
+        doc.addImage(fotoData, "JPEG", 10, y, imgWidth, imgHeight);
+        y += imgHeight + 4;
+      } catch (e) {
+        console.error("Erro ao adicionar foto no PDF:", e);
+      }
+    }
+
+    // Assinaturas
+    const sigPrestCanvas = document.getElementById("sigPrestador");
+    const sigClienteCanvas = document.getElementById("sigCliente");
+    const sigPrestData = sigPrestCanvas.toDataURL("image/png");
+    const sigClienteData = sigClienteCanvas.toDataURL("image/png");
+
+    if (y > 200) {
+      doc.addPage();
+      y = 20;
+    }
+
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 80);
+    doc.text("Assinaturas", 10, y);
+    doc.setDrawColor(255, 204, 0);
+    doc.line(10, y + 1, 200, y + 1);
+    y += 6;
+
+    const sigWidth = 80;
+    const sigHeight = 30;
+    doc.addImage(sigPrestData, "PNG", 10, y, sigWidth, sigHeight);
+    doc.addImage(sigClienteData, "PNG", 110, y, sigWidth, sigHeight);
+
+    y += sigHeight + 4;
+    doc.setFontSize(9);
+    doc.setTextColor(0, 0, 0);
+    doc.text("Prestador de Serviço", 10 + sigWidth / 2, y, { align: "center" });
+    doc.text("Cliente", 110 + sigWidth / 2, y, { align: "center" });
+
+    doc.setFontSize(8);
+    doc.setTextColor(80, 80, 80);
+    doc.text("Recibo gerado digitalmente - Brasil Baterias", 105, 290, { align: "center" });
+
+    const nomeArquivo = os ? `recibo_${os}.pdf` : "recibo_brasil_baterias.pdf";
+    doc.save(nomeArquivo);
+  }
+
+  btnGerarPDF.addEventListener("click", gerarPDF);
+
+  // ==========================
+  // IMPRIMIR PÁGINA
+  // ==========================
+  const btnImprimir = document.getElementById("btnImprimir");
+  btnImprimir.addEventListener("click", () => window.print());
+
+  // ==========================
+  // LOCALSTORAGE - SALVAR, LISTAR E EDITAR
+  // ==========================
+  const btnSalvarLocal = document.getElementById("btnSalvarLocal");
+  const btnNovo = document.getElementById("btnNovo");
+  const listaServicosDiv = document.getElementById("listaServicos");
+  const badgeTotal = document.getElementById("badgeTotal");
+
+  function carregarServicos() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }
+
+  function salvarServicos(lista) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(lista));
+  }
+
+  function atualizarLista() {
+    const lista = carregarServicos();
+    listaServicosDiv.innerHTML = "";
+    badgeTotal.textContent = lista.length;
+
+    lista.sort((a, b) => b.dataRegistro.localeCompare(a.dataRegistro));
+
+    lista.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "linha-servico";
+
+      const header = document.createElement("div");
+      header.className = "linha-servico-header";
+
+      const titulo = document.createElement("div");
+      titulo.textContent = item.os || "(sem OS)";
+
+      const valor = document.createElement("div");
+      valor.textContent = "R$ " + Number(item.valor || 0).toFixed(2);
+
+      header.appendChild(titulo);
+      header.appendChild(valor);
+
+      const linha2 = document.createElement("div");
+      linha2.textContent = item.cliente || "";
+
+      const linha3 = document.createElement("div");
+      const dt = new Date(item.dataRegistro);
+      const dStr = dt.toLocaleDateString("pt-BR") + " " + dt.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
+      const statusSpan = document.createElement("span");
+      statusSpan.className = "status-pill " + (item.status === "PENDENTE" ? "status-pendente" : "");
+      statusSpan.textContent = item.status || "PENDENTE";
+      linha3.appendChild(statusSpan);
+      linha3.insertAdjacentText("beforeend", " • " + dStr);
+
+      const linha4 = document.createElement("div");
+      linha4.style.marginTop = "4px";
+      const btnEditar = document.createElement("button");
+      btnEditar.type = "button";
+      btnEditar.textContent = "Abrir / Editar";
+      btnEditar.className = "btn-secondary";
+      btnEditar.style.fontSize = "11px";
+      btnEditar.addEventListener("click", () => carregarNoFormulario(item.id));
+
+      linha4.appendChild(btnEditar);
+
+      div.appendChild(header);
+      div.appendChild(linha2);
+      div.appendChild(linha3);
+      div.appendChild(linha4);
+
+      listaServicosDiv.appendChild(div);
+    });
+  }
+
+  function salvarRelatorioLocal() {
+    const lista = carregarServicos();
+
+    const novoId = currentId || Date.now();
+
+    const novo = {
+      id: novoId,
+      cliente: document.getElementById("cliente_nome").value,
+      doc: document.getElementById("cliente_doc").value,
+      tel: document.getElementById("cliente_tel").value,
+      endereco: document.getElementById("cliente_endereco").value,
+      os: document.getElementById("servico_os").value,
+      dataServ: document.getElementById("servico_data").value,
+      descServ: document.getElementById("servico_desc").value,
+      obsServ: document.getElementById("servico_obs").value,
+      valor: document.getElementById("servico_valor").value,
+      status: document.getElementById("servico_status").value,
+      pix_chave: document.getElementById("pix_chave").value,
+      pix_nome: document.getElementById("pix_nome").value,
+      pix_cidade: document.getElementById("pix_cidade").value,
+      pix_txid: document.getElementById("pix_txid").value,
+      foto: photoPreview.dataset.image || null,
+      dataRegistro: currentId
+        ? (lista.find(i => i.id === currentId)?.dataRegistro || new Date().toISOString())
+        : new Date().toISOString()
+    };
+
+    const idx = lista.findIndex(item => item.id === novoId);
+    if (idx >= 0) {
+      lista[idx] = novo;
+      alert("Recibo atualizado no aparelho (LocalStorage).");
+    } else {
+      lista.push(novo);
+      alert("Recibo salvo no aparelho (LocalStorage).");
+    }
+
+    currentId = novoId;
+    atualizarStatusEdicao();
+    salvarServicos(lista);
+    atualizarLista();
+  }
+
+  btnSalvarLocal.addEventListener("click", salvarRelatorioLocal);
+
+  function carregarNoFormulario(id) {
+    const lista = carregarServicos();
+    const item = lista.find(i => i.id === id);
+    if (!item) return;
+
+    currentId = id;
+    atualizarStatusEdicao();
+
+    document.getElementById("cliente_nome").value = item.cliente || "";
+    document.getElementById("cliente_doc").value = item.doc || "";
+    document.getElementById("cliente_tel").value = item.tel || "";
+    document.getElementById("cliente_endereco").value = item.endereco || "";
+
+    document.getElementById("servico_os").value = item.os || "";
+    document.getElementById("servico_data").value = item.dataServ || "";
+    document.getElementById("servico_desc").value = item.descServ || "";
+    document.getElementById("servico_obs").value = item.obsServ || "";
+    document.getElementById("servico_valor").value = item.valor || "";
+    document.getElementById("servico_status").value = item.status || "PENDENTE";
+
+    document.getElementById("pix_chave").value = item.pix_chave || "";
+    document.getElementById("pix_nome").value = item.pix_nome || document.getElementById("empresa_nome").value;
+    document.getElementById("pix_cidade").value = item.pix_cidade || "MARILIA";
+    document.getElementById("pix_txid").value = item.pix_txid || item.os || "";
+
+    if (item.foto) {
+      photoPreview.src = item.foto;
+      photoPreview.dataset.image = item.foto;
+    } else {
+      photoPreview.src = "";
+      delete photoPreview.dataset.image;
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    alert("Recibo carregado para edição. Corrija os dados e clique em 'Salvar no aparelho' ou gere novo PDF.");
+  }
+
+  function limparFormulario() {
+    currentId = null;
+    atualizarStatusEdicao();
+
+    document.getElementById("cliente_nome").value = "";
+    document.getElementById("cliente_doc").value = "";
+    document.getElementById("cliente_tel").value = "";
+    document.getElementById("cliente_endereco").value = "";
+
+    document.getElementById("servico_os").value = "";
+    document.getElementById("servico_data").value = "";
+    document.getElementById("servico_desc").value = "";
+    document.getElementById("servico_obs").value = "";
+    document.getElementById("servico_valor").value = "";
+    document.getElementById("servico_status").value = "PENDENTE";
+
+    document.getElementById("pix_chave").value = "";
+    document.getElementById("pix_nome").value = "A BRASIL BATERIAS";
+    document.getElementById("pix_cidade").value = "MARILIA";
+    document.getElementById("pix_txid").value = "";
+
+    photoPreview.src = "";
+    delete photoPreview.dataset.image;
+
+    limparAssinaturas();
+  }
+
+  function atualizarStatusEdicao() {
+    if (currentId) {
+      statusEdicaoSpan.textContent = "Editando recibo ID: " + currentId;
+    } else {
+      statusEdicaoSpan.textContent = "";
+    }
+  }
+
+  btnNovo.addEventListener("click", limparFormulario);
+
+  // Inicializa lista ao abrir
+  atualizarLista();
+
+  // Preencher campos Pix automaticamente com dados da empresa
+  document.getElementById("pix_nome").value = "A BRASIL BATERIAS";
+  document.getElementById("pix_cidade").value = "MARILIA";
+</script>
+</body>
+</html>
